@@ -70,7 +70,7 @@ int count_neighbors(char **board, int row, int col, int width, int height )
 				continue;
 			int nr = row + dr;
 			int nc = col + dc;
-			if (nr >= 0 && nr < height && nc < width)
+			if (nr >= 0 && nr < height && nc >= 0 && nc < width)
 				if (board[nr][nc] == '0')
 					count++;
 		}
@@ -94,12 +94,8 @@ char **next_gen(char **board, int width, int height)
 					new_board[row][col] = ' ';
 			}
 			else
-			{
 				if (neighbors == 3)
 					new_board[row][col] = '0';
-				else
-					new_board[row][col] = ' ';
-			}
 		}
 	}
 	free_board(board, height);
@@ -115,8 +111,6 @@ int main (int argc, char **argv)
 		int max_iterations = atoi(argv[3]);
 		char **empty_board = board_creation(width, height);
 		char **board = start_board(empty_board, width, height);
-		if (!board)
-			return (0);
 		while (max_iterations--)
 			board = next_gen(board, width, height);
 		print_board(board, height, width);
