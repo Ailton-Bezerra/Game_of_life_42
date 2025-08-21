@@ -27,10 +27,6 @@ char **start_board(char **new_board, int width, int height)
     int drawing = 0;
     while (read(STDIN_FILENO, &c, 1) > 0)
     {
-        if (c == '\n')
-            continue;
-        if (new_board[array] == NULL)
-			break;
 		if (c == 'x')
 			drawing = !drawing;
 		else if (c == 'w' && array > 0)
@@ -41,7 +37,7 @@ char **start_board(char **new_board, int width, int height)
 			array++;
 		else if (c == 'd' && (index + 1 < width))
 			index++;
-		if (drawing && new_board[array] && index < width)
+		if (drawing)
 			new_board[array][index] = '0';
     }
 	return (new_board);
@@ -59,7 +55,7 @@ char **board_creation(int width, int height)
 	return (new_board);
 }
 
-int count_neighbors(char **board, int row, int col, int width, int height )
+int count_neighbors(char **board, int row, int col, int width, int height)
 {
 	int count = 0;
 	for (int dr = -1; dr <= 1; dr++)
@@ -90,8 +86,6 @@ char **next_gen(char **board, int width, int height)
 			{
 				if (neighbors == 2 || neighbors == 3)
 					new_board[row][col] = '0';
-				else
-					new_board[row][col] = ' ';
 			}
 			else
 				if (neighbors == 3)
